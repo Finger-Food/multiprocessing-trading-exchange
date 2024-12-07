@@ -1,3 +1,13 @@
+## A Trading Exchange written in C
+
+This is a trading exchange created as part of a university assignment written in C. Though a university assignment it's a project I'm quite fond of due to the time and effort I put into enhancements beyond the scope of the task for the purposes of completeness and efficiency (e.g., writing up a generalised hashmap amongst other data structures for the purpose of storing, managing, and matching transactions).
+
+The exchange takes in trader binaries as command line inputs and then executes them as as it starts up. Communication between between the traders and the exchange takes place through pipes, with a signal being sent following to indicate the sending of a message.
+
+I plan to do this README properly at some point, but for now I've just left it with some answers I had for basic university questions on functionality.
+
+---
+
 1. Describe how your exchange works.
 
 Initial Phase: The exchange verifies command line arguments, parses the product file,forks and executes the trader files, whilst also initialising variables and setting up signal handlers and blockers.
@@ -27,4 +37,4 @@ The tests are made up of:
 	- Unit tests to check the data structures function correctly (the hash map, linked list and queue), some of them being tailored towards their function in the exchange program
 	- End to end tests (input binaries against expected output) to verify the overall control flow of the programs, both exchange and trader: I run the exchange against test traders to assert its output in various circumstances and inputs (including timing). And also the autotrader with the exchange against trader binary’s specifically to test its functionality
 
-They are made using ‘make tests’, and run via ‘make run_tests’ (the second just being an intermediate for a bash test script I’ve created.
+They are made using ‘make tests’, and run via ‘make run_tests’ (the second just being an intermediate for a bash test script I’ve created).
