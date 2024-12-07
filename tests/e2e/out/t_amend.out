@@ -1,0 +1,24 @@
+[PEX] Starting
+[PEX] Trading 2 products: GPU Router
+[PEX] Created FIFO /tmp/pe_exchange_0
+[PEX] Created FIFO /tmp/pe_trader_0
+[PEX] Starting trader 0 (tests/e2e/t_amend)
+[PEX] Connected to /tmp/pe_exchange_0
+[PEX] Connected to /tmp/pe_trader_0
+[PEX] [T0] Parsing command: <BUY 0 GPU 30 500>
+[PEX]	--ORDERBOOK--
+[PEX]	Product: GPU; Buy levels: 1; Sell levels: 0
+[PEX]		BUY 30 @ $500 (1 order)
+[PEX]	Product: Router; Buy levels: 0; Sell levels: 0
+[PEX]	--POSITIONS--
+[PEX]	Trader 0: GPU 0 ($0), Router 0 ($0)
+[PEX] [T0] Parsing command: <AMEND 0 50 100>
+[PEX]	--ORDERBOOK--
+[PEX]	Product: GPU; Buy levels: 1; Sell levels: 0
+[PEX]		BUY 50 @ $100 (1 order)
+[PEX]	Product: Router; Buy levels: 0; Sell levels: 0
+[PEX]	--POSITIONS--
+[PEX]	Trader 0: GPU 0 ($0), Router 0 ($0)
+[PEX] Trader 0 disconnected
+[PEX] Trading completed
+[PEX] Exchange fees collected: $0
