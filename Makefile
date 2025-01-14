@@ -1,7 +1,7 @@
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wvla -O0 -std=c11 -g -fsanitize=address -Iheaders -fsanitize=undefined
 LDFLAGS		= -Llib -lds
-TARGETS		= pe_exchange pe_trader
+TARGETS		= pe_exchange pe_trader $(LIB_DS)
 
 VPATH		= src:src/data_structs:src/helper
 
