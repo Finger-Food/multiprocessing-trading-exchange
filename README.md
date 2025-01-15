@@ -1,4 +1,4 @@
-# A Trading Exchange written in C
+# Local Trading Exchange written in C
 
 ## Overview
 
@@ -8,35 +8,33 @@ At a high level, the exchange takes in filepaths representing trader binaries as
 
 I created hashmap, linkedlist, and circular queue data structures with some twists—a combined node hashmap linked list node such that items retrieved from the hashmap could be immediately extracted from the linkedlist—to allow for constant time or linear time processing of all trader commands. These data structures were tested through CMocka's unit tests, while the exchange itself tested through E2E tests.
 
----
+## Setup
 
-1. Describe how your exchange works.
+1. Clone the repository:
+	```bash
+	git clone https://github.com/Finger-Food/multiprocessing-trading-exchange
+	cd multiprocessing-trading-exchange
+	```
 
-Initial Phase: The exchange verifies command line arguments, parses the product file,forks and executes the trader files, whilst also initialising variables and setting up signal handlers and blockers.
+2. Compile the exchange
+	```bash
+	make all
+	```
 
-Main loop: check if there are traders still in exchange  -->  wait till a signal is received (indicating message or disconnection)
-	-->  check the corresponding pipe of trader that sent signal (if trader hasn’t disconnected) -->  parse message (if there is one)
-	-->  process command, respond to traders and adjust/create orders (if valid)
-	-->  match order according to price-time priority, including fee/position calculations/adjustments and fill messages
-	-->  add order to book if not completed (and remove orders that are) -->  output orderbook and positions
-	-->   repeat
+3. Compile the test traders and unit tests
+	```bash
+	make tests
+	```
 
-Throughout all this, the SIGUSR1 and SIGCHLD are monitored for via a lightweight handler and queue, signal blocking when necessary (missing signals are of lower concern than race conditions leading to incorrect behaviour)
+## Execution
 
+The exchange is run through:
+```bash
+./pe_exchange traderbin_1 traderbin_2 [...]
+```
+where `traderbin_i` is the $i$'th trader binary in the exchange.
 
-2. Describe your design decisions for the trader and how it's fault-tolerant.
-
-The key design decisions were using epoll instead of signals (efficiency) and also to send extra signals to the exchange so long as there is an ‘accepted’ message lacking (fault tolerance).
-
-Signals are slower, can be missed and with the size of the message that are to be sent/received, the reads and writes will be atomic. Hence, by using epoll to determine when the exchange sends a message, the trader can respond faster than otherwise.
-
-By receiving multiple signals simultaneously, the exchange can miss the autotrader's signals. The trader accounts for this  by following up with further signals if the message received following an order isn’t an ‘accept’ or if a response isn't received by the trader messages within a reasonable time frame (along side other checks of signal without message, incorrect number of command line args, invalid message, etc.) making it fault tolerant.
-
-
-3. Describe your tests and how to run them.
-
-The tests are made up of:
-	- Unit tests to check the data structures function correctly (the hash map, linked list and queue), some of them being tailored towards their function in the exchange program
-	- End to end tests (input binaries against expected output) to verify the overall control flow of the programs, both exchange and trader: I run the exchange against test traders to assert its output in various circumstances and inputs (including timing). And also the autotrader with the exchange against trader binary’s specifically to test its functionality
-
-They are made using ‘make tests’, and run via ‘make run_tests’ (the second just being an intermediate for a bash test script I’ve created).
+The tests are run through:
+```bash
+make run_tests
+```
